@@ -5,8 +5,8 @@ HTML5, CSS3 e JavaScript Vanilla.
 
 ## Estado atual
 
-Primeira etapa: ambiente de desenvolvimento, conexão PDO e página provisória.
-Login, schema, dados iniciais, CRUD e interface final ainda não foram implementados.
+Ambiente, conexão PDO, schema e dados iniciais implementados.
+Login, CRUD e interface final ainda não foram implementados; a página é provisória.
 O progresso está em [docs/checklist.md](docs/checklist.md).
 
 Base validada em 08/09/2026: build e inicialização, PHP 8.4.25, MySQL 8.4.11,
@@ -32,6 +32,7 @@ Na raiz do projeto:
 ```sh
 docker compose up --build -d --wait
 docker compose exec -T app php scripts/check-environment.php
+docker compose exec -T app php scripts/init-database.php
 ```
 
 Acesse http://localhost:8080. Nesta etapa aparece somente a página provisória
@@ -48,8 +49,8 @@ O Compose fornece valores padrão exclusivos para desenvolvimento local.
 Opcionalmente, copie `.env.example` para `.env` e ajuste porta e senhas antes
 da primeira inicialização. `.env` não é versionado.
 
-As senhas de banco são credenciais locais de desenvolvimento, não credenciais
-de login no portal. O usuário de login será incluído na etapa de autenticação.
+As senhas de banco são credenciais locais de desenvolvimento, diferentes
+das credenciais do usuário de teste descritas abaixo.
 
 O MySQL não publica porta no Windows, portanto pode coexistir com o MySQL
 local. Os dados ficam no volume `mysql_data`. Alterar as senhas no `.env`
@@ -76,19 +77,59 @@ o volume do banco. Evite adicionar `-v`, pois essa opção exclui os dados.
 public/       conteúdo acessível pelo navegador
 src/          código PHP da aplicação
 scripts/      verificações e futuros comandos de inicialização
+database/     schema SQL e dados iniciais dos jogos e edições
 docker/       configuração de Apache e PHP
 docs/         checklist dos requisitos
 ```
 
 ## Próximas etapas
 
-1. Schema e seed com os jogos e as 15 edições do PDF.
-2. Login, sessões e proteção dos endpoints administrativos.
-3. CRUD e upload de imagens.
-4. Interface, manipulação do DOM e carregamento das edições com fetch.
-5. Verificação final e documentação das credenciais e decisões de UX.
+1. Login, sessões e proteção dos endpoints administrativos.
+2. CRUD e upload de imagens.
+3. Interface, manipulação do DOM e carregamento das edições com fetch.
+4. Verificação final e documentação das decisões de UX.
 
 As decisões de UX serão documentadas aqui quando forem implementadas.
+
+## Banco e carga inicial
+
+Execute `docker compose exec -T app php scripts/init-database.php` após subir
+os serviços. O comando cria as tabelas que não existem, insere três jogos e
+as 15 edições do JSON do PDF e cria o usuário de desenvolvimento:
+
+- Usuário: `admin`
+- Senha inicial: `LigaDev2026!`
+
+A senha é armazenada como hash gerado por `password_hash`, nunca como texto
+puro na tabela. Estas são credenciais públicas de demonstração local.
+O usuário já existe no banco, mas a tela e o fluxo de login ainda não estão prontos.
+
+Reexecutar preserva registros existentes, incluindo a senha do admin, e não
+duplica os dados iniciais. Não há cartas de exemplo nesta etapa: o cadastro
+com imagem será implementado junto ao CRUD.
+
+O script funciona também com o volume já criado. `CREATE TABLE IF NOT EXISTS`
+não atualiza a estrutura de tabelas existentes; futuras alterações de schema
+precisarão de SQL específico. A inicialização não é uma transação única:
+DDL no MySQL faz commit implícito. Se falhar, corrija a causa e execute novamente.
+
+| Tabela | Responsabilidade |
+| --- | --- |
+| `users` | Login único, hash da senha e data de criação. |
+| `card_games` | Identificadores `magic`, `pokemon` e `yugioh`. |
+| `editions` | IDs e nomes do PDF, com chave estrangeira para o jogo. |
+| `cards` | Nomes, edição, caminho da imagem, raridade e datas. |
+
+A carta referencia a edição, que identifica o jogo. Não há campo de jogo
+duplicado em `cards`. Chaves estrangeiras impedem referências inexistentes e
+exclusão de edições em uso. `name_pt` aceita NULL; os demais campos do cadastro
+são obrigatórios. A raridade é texto, pois o PDF não define opções. A imagem
+será um arquivo, com somente seu caminho armazenado no banco.
+
+Validação em 09/09/2026: inicialização repetida sem duplicação, hash de senha
+verificado, nome português nulo aceito e rejeição de edição inexistente,
+exclusão de edição em uso, nome inglês vazio e login duplicado.
+Os dados temporários dessas verificações foram revertidos por rollback.
 
 ## Referências do ambiente
 

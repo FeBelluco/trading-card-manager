@@ -23,7 +23,7 @@ O PDF e o email fornecido não informam prazo de entrega.
 - [ ] Edição inicialmente desabilitada.
 - [ ] Fetch das edições ao selecionar um jogo, com loading.
 - [ ] Popular select com os resultados; recarregar e resetar ao trocar o jogo.
-- [ ] Reproduzir os 15 IDs e nomes de edições fornecidos no JSON do PDF.
+- [x] Reproduzir os 15 IDs e nomes de edições fornecidos no JSON do PDF.
 - [ ] Imagem da carta.
 - [ ] Raridade da carta.
 
@@ -44,7 +44,7 @@ O PDF e o email fornecido não informam prazo de entrega.
 - [ ] Credenciais válidas de login documentadas.
 - [ ] Pelo menos duas decisões de UX/Produto implementadas e justificadas.
 - [ ] Código autoral e sem ferramentas proibidas; política de IA não detalhada no PDF.
-- [ ] Schema e massa inicial do banco.
+- [x] Schema e massa inicial do banco.
 - [ ] CRUD e autenticação com todos os endpoints e fluxos sem erros de execução.
 
 ## Verificação da primeira etapa — 08/09/2026
@@ -55,3 +55,15 @@ O PDF e o email fornecido não informam prazo de entrega.
 - Sintaxe dos três arquivos PHP e configuração Apache: válidas.
 - Página inicial: HTTP 200 com o título esperado.
 - Acesso HTTP a src/database.php, compose.yaml, .env.example e script de verificação: HTTP 404.
+
+## Segunda etapa — 09/09/2026
+
+- [x] Tabelas users, card_games, editions e cards com chaves estrangeiras.
+- [x] Comando explícito de inicialização, utilizável com volume existente.
+- [x] Três jogos e 15 edições do PDF carregados sem duplicação ao repetir.
+- [x] Admin de demonstração criado com hash; credenciais documentadas.
+- [x] Validar senha com password_verify e rejeitar senha incorreta.
+- [x] Validar nome português opcional, edição inexistente, edição em uso,
+  nome inglês vazio e login duplicado, revertendo dados de teste.
+- A criação do usuário não conclui o requisito de autenticação: tela, sessão
+  e proteção dos endpoints continuam pendentes.
