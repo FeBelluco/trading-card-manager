@@ -14,6 +14,7 @@ require_login();
     <title>Gerenciador de Cartas</title>
     <link rel="stylesheet" href="/assets/styles.css">
     <script type="module" src="/assets/cards.js"></script>
+    <meta name="csrf-token" content="<?= escape(csrf_token()) ?>">
 </head>
 <body>
     <main class="portal-panel">
@@ -29,6 +30,10 @@ require_login();
             <?php if (($_GET['created'] ?? '') === '1'): ?>
                 <p role="status">Carta cadastrada com sucesso.</p>
             <?php endif; ?>
+            <?php if (($_GET['updated'] ?? '') === '1'): ?>
+                <p role="status">Carta atualizada com sucesso.</p>
+            <?php endif; ?>
+            <p id="cards-action-status" role="status"></p>
             <p id="cards-status" role="status">Carregando cartas…</p>
             <button id="cards-retry" type="button" hidden>Tentar novamente</button>
             <a id="cards-login" href="/login.php" hidden>Entrar novamente</a>
@@ -44,11 +49,23 @@ require_login();
                         <th scope="col">Card Game</th>
                         <th scope="col">Edição</th>
                         <th scope="col">Raridade</th>
+                        <th scope="col">Ações</th>
                     </tr></thead>
                     <tbody id="cards-rows"></tbody>
                 </table>
             </div>
         </section>
+        <dialog id="delete-dialog" aria-labelledby="delete-title" aria-describedby="delete-description">
+            <h2 id="delete-title">Excluir carta?</h2>
+            <p id="delete-description"></p>
+            <p>Esta ação remove a carta e sua imagem e não pode ser desfeita.</p>
+            <p id="delete-status" role="status"></p>
+            <a id="delete-login" href="/login.php" hidden>Entrar novamente</a>
+            <div class="dialog-actions">
+                <button id="delete-cancel" type="button" autofocus>Cancelar</button>
+                <button id="delete-confirm" class="danger" type="button">Excluir carta</button>
+            </div>
+        </dialog>
     </main>
 </body>
 </html>

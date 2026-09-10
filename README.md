@@ -6,8 +6,8 @@ HTML5, CSS3 e JavaScript Vanilla.
 ## Estado atual
 
 Ambiente, conexão PDO, schema, dados iniciais e autenticação implementados.
-Login, logout, listagem e cadastro de cartas com imagens funcionam.
-Edição e exclusão ainda estão pendentes.
+Login, logout, listagem, cadastro, edição e exclusão de cartas com imagens
+funcionam. A revisão final da interface e da entrega permanece pendente.
 O progresso está em [docs/checklist.md](docs/checklist.md).
 
 Base validada em 08/09/2026: build e inicialização, PHP 8.4.25, MySQL 8.4.11,
@@ -86,9 +86,9 @@ storage/      ponto de montagem do volume de imagens (fora da pasta pública)
 
 ## Próximas etapas
 
-1. Edição e exclusão de cartas, protegendo cada novo endpoint.
-2. Revisão da interface e testes dos fluxos completos.
-3. Verificação final da entrega e das decisões de UX.
+1. Revisão da interface e testes finais dos fluxos completos.
+2. Testar instalação do zero e conferir o checklist da entrega.
+3. Liberar acesso aos avaliadores no GitHub e enviar o link do repositório.
 
 ## Autenticação e verificação manual
 
@@ -114,6 +114,10 @@ há limitação de tentativas de login; o ambiente é local de demonstração.
   evita devolver a senha no HTML.
 - Usar rótulos visíveis, autocomplete de credenciais e foco destacado: facilita
   o uso por teclado e com gerenciadores de senhas, sem depender de placeholders.
+- Confirmar exclusão com o nome da carta e foco inicial em Cancelar: reduz o
+  risco de remover o registro errado e oferece uma saída imediata pelo teclado.
+- Na edição, manter a imagem quando nenhuma nova é enviada: evita exigir que
+  o usuário procure o arquivo novamente para corrigir apenas um texto.
 
 ## Listagem de cartas
 
@@ -202,6 +206,52 @@ No Edge automatizado: troca rápida de jogo, loading, reset, falha e nova
 tentativa, preservação de formulário, cadastro com redirecionamento, miniatura,
 texto seguro e viewport móvel. Ferramentas de teste foram usadas fora do
 projeto; não são dependências de execução. Registros e imagens de teste removidos.
+
+## Edição e exclusão
+
+Na listagem, cada carta possui ações Editar e Excluir.
+
+`/card-edit.php?id=ID` consulta a carta no servidor e reutiliza o formulário
+em `src/views/card-form.php`, também usado por `/card-new.php`. Todos os campos
+vêm preenchidos. O JavaScript carrega as edições por fetch antes de restaurar
+a edição salva. Trocar o jogo continua limpando a seleção. A imagem atual é
+mostrada e o envio de uma nova é opcional.
+
+O formulário usa `POST /api/card.php?id=ID`, com `action=update` e token CSRF.
+POST mantém o tratamento nativo de multipart/arquivos no PHP. O servidor aplica
+as mesmas validações do cadastro. Sem arquivo, preserva a imagem; com arquivo,
+salva o novo, confirma o UPDATE e só então remove o antigo. Se o UPDATE falhar,
+reverte a transação e remove o novo arquivo.
+
+Excluir abre um dialog nativo com o nome da carta, Cancelar e Excluir carta.
+Cancelar ou Escape não faz requisição. Confirmar envia POST ao mesmo endpoint,
+com `action=delete` e CSRF. O banco remove o registro antes da remoção do arquivo.
+A lista é recarregada após sucesso; falhas permitem tentar novamente.
+
+As duas operações usam transação e SELECT FOR UPDATE para serializar alterações
+sobre a mesma carta. IDs inválidos, sessão ausente, CSRF inválido e cartas que
+já foram excluídas são tratados. Conflitos de conteúdo não são detectados:
+em duas edições válidas, a última gravação prevalece.
+
+O banco e o sistema de arquivos não compartilham transação. Uma falha de limpeza
+após commit é registrada no log, sem desfazer a alteração já confirmada; nesse
+caso pode restar um arquivo órfão. Nomes de arquivo são verificados antes da remoção.
+
+Para revisar:
+
+1. Edite um texto sem selecionar imagem: a imagem deve continuar a mesma.
+2. Troque o jogo e selecione uma nova edição; salve e confira a lista.
+3. Envie uma nova imagem: a miniatura deve mudar.
+4. Abra Excluir e cancele: a carta deve permanecer.
+5. Confirme a exclusão: carta e imagem devem ser removidas.
+
+Verificações em 10/09/2026: API (autenticação, CSRF, método, ID, campos, edição
+incompatível, arquivo inválido e grande), mantendo dados anteriores nas falhas.
+No Edge: formulário preenchido, edição sem trocar imagem, troca de jogo/imagem,
+texto literal, confirmação/cancelamento por botão e Escape, falha com nova
+tentativa, exclusão e remoção física das imagens. Recursos excluídos retornam
+404 e os registros temporários dos testes foram removidos. Dialog revisado
+em viewport de 390 pixels.
 
 ## Banco e carga inicial
 

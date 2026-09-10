@@ -42,6 +42,11 @@ button:disabled { opacity: .6; cursor: not-allowed; }
 [aria-invalid="true"] { border-color: #8c1825; }
 .image-preview { max-width: 220px; max-height: 300px; object-fit: contain; }
 .card-thumbnail { width: 72px; height: 100px; object-fit: contain; }
+dialog { max-width: min(480px, calc(100vw - 32px)); border: 1px solid #d8e0ea; border-radius: 12px; padding: 24px; overflow-wrap: anywhere; }
+dialog::backdrop { background: rgb(0 0 0 / 45%); }
+.dialog-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.danger { background: #a22030; }
+.danger:hover { background: #791724; }
 @media (max-width: 480px) {
     body { padding: 24px 12px; }
     main { padding: 24px 20px; }

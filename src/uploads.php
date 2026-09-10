@@ -46,3 +46,15 @@ function store_image(array $file): string
     }
     return $filename;
 }
+
+function remove_image(string $filename): void
+{
+    if (preg_match('/\A[a-f0-9]{32}\.(jpg|png|webp)\z/', $filename) !== 1) {
+        error_log('Nome inválido ao remover imagem.');
+        return;
+    }
+    $path = uploads_directory() . '/' . $filename;
+    if (is_file($path) && !unlink($path)) {
+        error_log('Não foi possível remover a imagem: ' . $filename);
+    }
+}

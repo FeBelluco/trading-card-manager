@@ -16,8 +16,8 @@ O PDF e o email fornecido não informam prazo de entrega.
 - [x] Login e senha, com acesso administrativo protegido.
 - [x] Listar cartas.
 - [x] Incluir cartas.
-- [ ] Editar cartas.
-- [ ] Excluir cartas.
+- [x] Editar cartas.
+- [x] Excluir cartas.
 - [x] Nome em inglês e nome em português opcional.
 - [x] Select de jogo: Magic: The Gathering, Pokémon e Yu-Gi-Oh!.
 - [x] Edição inicialmente desabilitada.
@@ -29,8 +29,8 @@ O PDF e o email fornecido não informam prazo de entrega.
 
 ## Qualidade proposta — escolhas de implementação
 
-- [x] Sessões, hash de senha e proteção CSRF no login/logout.
-- [x] Validação no servidor, incluindo vínculo entre edição e jogo no cadastro.
+- [x] Sessões, hash de senha e proteção CSRF no login/logout e alterações de cartas.
+- [x] Validação no servidor, incluindo vínculo entre edição e jogo no cadastro/edição.
 - [x] Consultas parametrizadas e renderização segura de textos nos fluxos atuais.
 - [x] Upload com limite, validação do conteúdo e nome gerado pelo servidor.
 - [x] Tratar loading, erro e lista vazia, inclusive troca rápida de jogo.
@@ -94,4 +94,15 @@ O PDF e o email fornecido não informam prazo de entrega.
 - [x] Preservar formulário após erro; impedir envio concorrente pelo botão.
 - [x] Testar API e navegador real, incluindo troca rápida, nova tentativa e miniatura.
 - [x] Remover os registros e arquivos temporários dos testes.
-- Edição, exclusão e revisão final da entrega continuam pendentes.
+- Nesta etapa, edição e exclusão ainda estavam pendentes.
+
+## Sexta etapa — edição e exclusão — 10/09/2026
+
+- [x] Formulário compartilhado de cadastro/edição com valores preenchidos.
+- [x] Restaurar edição salva depois do fetch; resetar ao trocar o jogo.
+- [x] Manter imagem se não houver novo upload; remover antiga após substituição.
+- [x] Confirmação de exclusão por dialog com nome e foco em Cancelar.
+- [x] POST com autenticação, CSRF e validações, transações com bloqueio da carta.
+- [x] Tratar carta inexistente ou excluída enquanto o formulário está aberto.
+- [x] Testar API e navegador, incluindo arquivos, cancelamento e falha/repetição.
+- Revisão final da interface, instalação limpa e entrega continuam pendentes.

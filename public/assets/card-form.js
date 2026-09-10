@@ -9,6 +9,9 @@ const status = document.querySelector('#form-status');
 const login = document.querySelector('#form-login');
 const image = document.querySelector('#image');
 const preview = document.querySelector('#image-preview');
+const editing = form.dataset.editing === 'true';
+const saveLabel = editing ? 'Salvar alterações' : 'Cadastrar carta';
+let initialEdition = form.dataset.edition;
 let editionRequest;
 let previewUrl;
 let saving = false;
@@ -18,7 +21,7 @@ function updateSave() {
 }
 
 function expiredSession() {
-    status.textContent = 'Sua sessão expirou. Entre novamente antes de cadastrar.';
+    status.textContent = 'Sua sessão expirou. Entre novamente antes de salvar.';
     login.hidden = false;
 }
 
@@ -53,6 +56,10 @@ async function loadEditions() {
         if (!Array.isArray(data.editions)) throw new Error('Resposta inválida.');
         edition.replaceChildren(new Option('Selecione uma edição', ''));
         for (const item of data.editions) edition.add(new Option(item.name, item.id));
+        if (initialEdition) {
+            edition.value = initialEdition;
+            initialEdition = '';
+        }
         edition.disabled = data.editions.length === 0;
         editionStatus.textContent = data.editions.length ? 'Edições carregadas.' : 'Nenhuma edição disponível para este jogo.';
     } catch (error) {
@@ -107,35 +114,35 @@ form.addEventListener('submit', async (event) => {
     if (saving || edition.disabled || !edition.value || !form.reportValidity()) return;
     clearErrors();
     login.hidden = true;
-    status.textContent = 'Cadastrando carta…';
+    status.textContent = 'Salvando carta…';
     const data = new FormData(form);
     saving = true;
     fields.disabled = true;
-    save.textContent = 'Cadastrando…';
+    save.textContent = 'Salvando…';
     updateSave();
     let errors = {};
     try {
-        const response = await fetch('/api/cards.php', { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+        const response = await fetch(form.getAttribute('action'), { method: 'POST', body: data, headers: { Accept: 'application/json' } });
         if (response.status === 401) { expiredSession(); return; }
         const result = await response.json();
         if (!response.ok) {
-            status.textContent = result.error || 'Não foi possível cadastrar a carta.';
+            status.textContent = result.error || 'Não foi possível salvar a carta.';
             errors = result.fields || {};
             return;
         }
-        window.location.assign('/?created=1');
+        window.location.assign(editing ? '/?updated=1' : '/?created=1');
     } catch {
-        status.textContent = 'Não foi possível confirmar o cadastro. Verifique a lista antes de tentar novamente para evitar duplicação.';
+        status.textContent = 'Não foi possível confirmar a gravação. Verifique a lista antes de tentar novamente.';
     } finally {
         saving = false;
         fields.disabled = false;
-        save.textContent = 'Cadastrar carta';
+        save.textContent = saveLabel;
         updateSave();
         showErrors(errors);
     }
 });
 
-game.addEventListener('change', loadEditions);
+game.addEventListener('change', () => { initialEdition = ''; loadEditions(); });
 retry.addEventListener('click', loadEditions);
 edition.addEventListener('change', updateSave);
 // Também trata valores restaurados pelo navegador ao voltar para o formulário.
