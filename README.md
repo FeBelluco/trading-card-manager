@@ -6,7 +6,8 @@ HTML5, CSS3 e JavaScript Vanilla.
 ## Estado atual
 
 Ambiente, conexão PDO, schema, dados iniciais e autenticação implementados.
-Login e logout funcionam; CRUD e interface final de cartas ainda estão pendentes.
+Login, logout e listagem de cartas funcionam. Cadastro, edição, exclusão e
+imagens ainda estão pendentes.
 O progresso está em [docs/checklist.md](docs/checklist.md).
 
 Base validada em 08/09/2026: build e inicialização, PHP 8.4.25, MySQL 8.4.11,
@@ -84,7 +85,7 @@ docs/         checklist dos requisitos
 
 ## Próximas etapas
 
-1. CRUD e upload de imagens, protegendo cada novo endpoint com autenticação.
+1. Cadastro, edição, exclusão e upload de imagens, protegendo cada novo endpoint.
 2. Interface, manipulação do DOM e carregamento das edições com fetch.
 3. Verificação final e revisão das decisões de UX.
 
@@ -112,6 +113,34 @@ há limitação de tentativas de login; o ambiente é local de demonstração.
   evita devolver a senha no HTML.
 - Usar rótulos visíveis, autocomplete de credenciais e foco destacado: facilita
   o uso por teclado e com gerenciadores de senhas, sem depender de placeholders.
+
+## Listagem de cartas
+
+Após login, a página consulta `GET /api/cards.php` usando fetch. O endpoint
+retorna `{"cards": [...]}` com nomes, raridade, jogo e edição; os relacionamentos
+são consultados via JOIN. A ordem é nome em inglês e ID como desempate.
+Sem sessão, retorna JSON com HTTP 401. Outros métodos retornam HTTP 405 para
+usuários autenticados. Não exige CSRF porque a consulta GET não altera dados.
+
+`src/cards.php` contém a consulta SQL; `public/api/cards.php` trata HTTP e
+autenticação; `public/assets/cards.js` cria as linhas pelo DOM, com textContent.
+Há estados de carregamento, lista vazia, erro com nova tentativa e sessão expirada.
+A listagem ainda não tem paginação nem miniaturas; imagens serão tratadas na
+etapa de upload. A consulta carrega todas as cartas, adequada à massa pequena
+do desafio, mas exigiria paginação para um catálogo grande.
+
+Para revisar:
+
+1. Entre no portal: com o banco inicial vazio, aparece “Nenhuma carta cadastrada”.
+2. No DevTools, em Network, veja a chamada a `/api/cards.php` e o JSON retornado.
+3. Bloqueie essa URL no DevTools e recarregue: deve aparecer erro e Tentar novamente.
+4. Desbloqueie a URL e tente novamente: a listagem deve se recuperar.
+5. Saia por outra aba e repita a consulta: deve aparecer o link para entrar novamente.
+
+Verificações realizadas: API com e sem sessão, método inválido, consulta com
+duas cartas temporárias (JOIN, ordenação e português opcional), revertidas por
+rollback. Estados do JavaScript, nova tentativa e texto literal foram verificados
+com DOM simulado em Node; a revisão visual no navegador permanece manual.
 
 ## Banco e carga inicial
 

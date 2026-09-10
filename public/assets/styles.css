@@ -15,7 +15,7 @@ main {
     border-radius: 12px;
 }
 .login-panel { max-width: 440px; }
-.portal-panel { max-width: 800px; }
+.portal-panel { max-width: 1100px; }
 h1 { margin: 0 0 16px; line-height: 1.2; }
 .eyebrow { color: #465871; font-weight: 600; margin-top: 0; }
 form { display: grid; gap: 12px; }
@@ -26,6 +26,14 @@ button { background: #174a96; color: #fff; border: 0; cursor: pointer; margin-to
 button:hover { background: #103771; }
 :focus-visible { outline: 3px solid #b35b00; outline-offset: 3px; }
 .error { color: #8c1825; background: #fff0f1; padding: 12px; border-radius: 6px; }
+.logout-form { justify-content: start; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+caption { text-align: left; margin-bottom: 12px; color: #465871; }
+th, td { padding: 12px; border-bottom: 1px solid #d8e0ea; overflow-wrap: anywhere; }
+th { background: #f1f4f8; }
+td { min-width: 140px; vertical-align: top; }
+a { color: #174a96; }
 @media (max-width: 480px) {
     body { padding: 24px 12px; }
     main { padding: 24px 20px; }

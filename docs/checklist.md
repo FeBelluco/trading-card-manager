@@ -14,7 +14,7 @@ O PDF e o email fornecido não informam prazo de entrega.
 ## Requisitos funcionais — páginas 1 a 3
 
 - [x] Login e senha, com acesso administrativo protegido.
-- [ ] Listar cartas.
+- [x] Listar cartas.
 - [ ] Incluir cartas.
 - [ ] Editar cartas.
 - [ ] Excluir cartas.
@@ -74,3 +74,13 @@ O PDF e o email fornecido não informam prazo de entrega.
 - [x] Página inicial protegida, logout POST e CSRF no login/logout.
 - [x] Cookies HttpOnly/SameSite, Secure sob HTTPS e respostas sem cache.
 - Novos endpoints de cartas deverão aplicar autenticação e CSRF nas alterações.
+
+## Quarta etapa — listagem
+
+- [x] GET /api/cards.php protegido, com JSON e tratamento de erros.
+- [x] Consulta com JOIN de edições e jogos e ordenação por nome/ID.
+- [x] Renderização com fetch e DOM nativo usando textContent.
+- [x] Estados de carregamento, vazio, erro, nova tentativa e sessão expirada.
+- [x] Verificar API e consulta com registros temporários revertidos.
+- [x] Verificar estados JS com DOM simulado (não substitui revisão visual).
+- Miniaturas ficam para upload; cadastro, edição e exclusão continuam pendentes.
