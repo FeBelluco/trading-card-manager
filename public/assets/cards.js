@@ -10,6 +10,15 @@ function renderCards(cards) {
 
     for (const card of cards) {
         const row = document.createElement('tr');
+        const imageCell = document.createElement('td');
+        const image = document.createElement('img');
+        image.src = `/image.php?id=${encodeURIComponent(card.id)}`;
+        image.alt = `Imagem de ${card.name_en}`;
+        image.className = 'card-thumbnail';
+        image.loading = 'lazy';
+        image.addEventListener('error', () => { imageCell.textContent = 'Imagem indisponível'; }, { once: true });
+        imageCell.append(image);
+        row.append(imageCell);
         const values = [card.name_en, card.name_pt || '—', card.card_game_name,
             card.edition_name, card.rarity];
 

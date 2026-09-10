@@ -34,6 +34,14 @@ th, td { padding: 12px; border-bottom: 1px solid #d8e0ea; overflow-wrap: anywher
 th { background: #f1f4f8; }
 td { min-width: 140px; vertical-align: top; }
 a { color: #174a96; }
+fieldset { display: grid; gap: 8px; border: 1px solid #d8e0ea; padding: 20px; min-width: 0; }
+legend { font-weight: 600; }
+select { font: inherit; padding: 12px; border: 1px solid #687c95; border-radius: 6px; width: 100%; }
+button:disabled { opacity: .6; cursor: not-allowed; }
+.field-error { color: #8c1825; }
+[aria-invalid="true"] { border-color: #8c1825; }
+.image-preview { max-width: 220px; max-height: 300px; object-fit: contain; }
+.card-thumbnail { width: 72px; height: 100px; object-fit: contain; }
 @media (max-width: 480px) {
     body { padding: 24px 12px; }
     main { padding: 24px 20px; }

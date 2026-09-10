@@ -15,25 +15,25 @@ O PDF e o email fornecido não informam prazo de entrega.
 
 - [x] Login e senha, com acesso administrativo protegido.
 - [x] Listar cartas.
-- [ ] Incluir cartas.
+- [x] Incluir cartas.
 - [ ] Editar cartas.
 - [ ] Excluir cartas.
-- [ ] Nome em inglês e nome em português opcional.
-- [ ] Select de jogo: Magic: The Gathering, Pokémon e Yu-Gi-Oh!.
-- [ ] Edição inicialmente desabilitada.
-- [ ] Fetch das edições ao selecionar um jogo, com loading.
-- [ ] Popular select com os resultados; recarregar e resetar ao trocar o jogo.
+- [x] Nome em inglês e nome em português opcional.
+- [x] Select de jogo: Magic: The Gathering, Pokémon e Yu-Gi-Oh!.
+- [x] Edição inicialmente desabilitada.
+- [x] Fetch das edições ao selecionar um jogo, com loading.
+- [x] Popular select com os resultados; recarregar e resetar ao trocar o jogo.
 - [x] Reproduzir os 15 IDs e nomes de edições fornecidos no JSON do PDF.
-- [ ] Imagem da carta.
-- [ ] Raridade da carta.
+- [x] Imagem da carta.
+- [x] Raridade da carta.
 
 ## Qualidade proposta — escolhas de implementação
 
 - [x] Sessões, hash de senha e proteção CSRF no login/logout.
-- [ ] Validação no servidor, incluindo vínculo entre edição e jogo.
-- [ ] Consultas parametrizadas e renderização segura de textos.
-- [ ] Upload com limite, validação do conteúdo e nome gerado pelo servidor.
-- [ ] Tratar loading, erro e lista vazia, inclusive troca rápida de jogo.
+- [x] Validação no servidor, incluindo vínculo entre edição e jogo no cadastro.
+- [x] Consultas parametrizadas e renderização segura de textos nos fluxos atuais.
+- [x] Upload com limite, validação do conteúdo e nome gerado pelo servidor.
+- [x] Tratar loading, erro e lista vazia, inclusive troca rápida de jogo.
 - [ ] Interface responsiva e operação por teclado.
 - [ ] Verificar fluxos positivos e falhas relevantes.
 
@@ -83,4 +83,15 @@ O PDF e o email fornecido não informam prazo de entrega.
 - [x] Estados de carregamento, vazio, erro, nova tentativa e sessão expirada.
 - [x] Verificar API e consulta com registros temporários revertidos.
 - [x] Verificar estados JS com DOM simulado (não substitui revisão visual).
-- Miniaturas ficam para upload; cadastro, edição e exclusão continuam pendentes.
+- Nesta etapa, miniaturas e cadastro ainda estavam pendentes.
+
+## Quinta etapa — cadastro e imagens — 10/09/2026
+
+- [x] Formulário de cadastro com edições carregadas por fetch e cancelamento de requisições antigas.
+- [x] POST autenticado, token CSRF, validação de campos e jogo/edição.
+- [x] Upload JPEG/PNG/WebP até 5 MiB, prévia e nome aleatório.
+- [x] Volume persistente fora de public/ e leitura autenticada das imagens.
+- [x] Preservar formulário após erro; impedir envio concorrente pelo botão.
+- [x] Testar API e navegador real, incluindo troca rápida, nova tentativa e miniatura.
+- [x] Remover os registros e arquivos temporários dos testes.
+- Edição, exclusão e revisão final da entrega continuam pendentes.

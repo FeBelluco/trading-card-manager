@@ -6,8 +6,8 @@ HTML5, CSS3 e JavaScript Vanilla.
 ## Estado atual
 
 Ambiente, conexão PDO, schema, dados iniciais e autenticação implementados.
-Login, logout e listagem de cartas funcionam. Cadastro, edição, exclusão e
-imagens ainda estão pendentes.
+Login, logout, listagem e cadastro de cartas com imagens funcionam.
+Edição e exclusão ainda estão pendentes.
 O progresso está em [docs/checklist.md](docs/checklist.md).
 
 Base validada em 08/09/2026: build e inicialização, PHP 8.4.25, MySQL 8.4.11,
@@ -70,7 +70,7 @@ docker compose start
 ```
 
 `docker compose down` remove os containers e a rede do projeto, preservando
-o volume do banco. Evite adicionar `-v`, pois essa opção exclui os dados.
+os volumes do banco e das imagens. Evite adicionar `-v`, pois essa opção exclui os dados.
 
 ## Organização
 
@@ -81,13 +81,14 @@ scripts/      verificações e futuros comandos de inicialização
 database/     schema SQL e dados iniciais dos jogos e edições
 docker/       configuração de Apache e PHP
 docs/         checklist dos requisitos
+storage/      ponto de montagem do volume de imagens (fora da pasta pública)
 ```
 
 ## Próximas etapas
 
-1. Cadastro, edição, exclusão e upload de imagens, protegendo cada novo endpoint.
-2. Interface, manipulação do DOM e carregamento das edições com fetch.
-3. Verificação final e revisão das decisões de UX.
+1. Edição e exclusão de cartas, protegendo cada novo endpoint.
+2. Revisão da interface e testes dos fluxos completos.
+3. Verificação final da entrega e das decisões de UX.
 
 ## Autenticação e verificação manual
 
@@ -119,14 +120,15 @@ há limitação de tentativas de login; o ambiente é local de demonstração.
 Após login, a página consulta `GET /api/cards.php` usando fetch. O endpoint
 retorna `{"cards": [...]}` com nomes, raridade, jogo e edição; os relacionamentos
 são consultados via JOIN. A ordem é nome em inglês e ID como desempate.
-Sem sessão, retorna JSON com HTTP 401. Outros métodos retornam HTTP 405 para
-usuários autenticados. Não exige CSRF porque a consulta GET não altera dados.
+Sem sessão, retorna JSON com HTTP 401. O endpoint também aceita POST para
+cadastro; outros métodos retornam HTTP 405. A consulta GET não exige CSRF
+porque não altera dados; o cadastro exige o token.
 
 `src/cards.php` contém a consulta SQL; `public/api/cards.php` trata HTTP e
 autenticação; `public/assets/cards.js` cria as linhas pelo DOM, com textContent.
 Há estados de carregamento, lista vazia, erro com nova tentativa e sessão expirada.
-A listagem ainda não tem paginação nem miniaturas; imagens serão tratadas na
-etapa de upload. A consulta carrega todas as cartas, adequada à massa pequena
+A listagem mostra miniaturas por `/image.php?id=ID`, com autenticação, e ainda
+não tem paginação. A consulta carrega todas as cartas, adequada à massa pequena
 do desafio, mas exigiria paginação para um catálogo grande.
 
 Para revisar:
@@ -140,7 +142,66 @@ Para revisar:
 Verificações realizadas: API com e sem sessão, método inválido, consulta com
 duas cartas temporárias (JOIN, ordenação e português opcional), revertidas por
 rollback. Estados do JavaScript, nova tentativa e texto literal foram verificados
-com DOM simulado em Node; a revisão visual no navegador permanece manual.
+com DOM simulado em Node. Na etapa de cadastro, o fluxo com miniaturas também
+foi verificado em navegador real e em viewport de 390 pixels.
+
+## Cadastro, edições e imagens
+
+Na lista, clique em Cadastrar carta. A página `/card-new.php` usa HTML, CSS e
+o módulo nativo `public/assets/card-form.js`. Não há biblioteca no frontend.
+
+O campo Edição começa desabilitado. Selecionar um jogo faz
+`GET /api/editions.php?game=magic` (ou pokemon/yugioh), exibe loading e carrega
+as opções do banco. Trocar o jogo limpa a edição anterior e cancela a requisição
+pendente com AbortController; respostas antigas também são ignoradas. Erros
+permitem nova tentativa e sessão expirada oferece retorno ao login.
+
+O cadastro envia FormData para `POST /api/cards.php`, com token CSRF. O PHP
+valida obrigatoriedade e comprimento dos campos e confirma que a edição
+pertence ao jogo. Raridade é texto obrigatório; português vazio vira NULL.
+Erros de validação retornam HTTP 422 com mensagens por campo. O formulário
+preserva texto e arquivo selecionado após erro, destaca o primeiro campo
+inválido e bloqueia novos envios enquanto aguarda resposta. Após sucesso
+(HTTP 201), volta à lista com confirmação.
+
+Decisões de imagem (o PDF exige imagem, mas não define estes detalhes):
+
+- Uma imagem por carta, JPEG/PNG/WebP, no máximo 5 MiB (5.242.880 bytes;
+  apresentado como 5 MB na interface).
+- Prévia local antes do envio para conferir o arquivo selecionado.
+- Validação no PHP do upload, tamanho real, MIME por fileinfo e identificação
+  de imagem por getimagesize; nome original e MIME enviados pelo cliente não
+  determinam o formato salvo. SVG não é aceito.
+- Nome aleatório gerado pelo servidor. Somente o nome do arquivo vai ao banco.
+- Arquivos em `storage/uploads`, no volume Docker `uploads_data`, fora de
+  `public/`. O endpoint de imagem exige sessão e não aceita caminhos do cliente.
+- Se a gravação no banco falhar, o arquivo recém-enviado é removido. Não existe
+  transação atômica entre banco e arquivos; uma interrupção abrupta ainda pode
+  deixar um arquivo órfão.
+- Sem recorte, redimensionamento ou reprocessamento da imagem nesta etapa.
+
+Para aplicar a configuração do volume em uma instalação anterior:
+
+```sh
+docker compose up --build -d --wait
+```
+
+As imagens persistem ao recriar o container, assim como os registros no banco.
+Um backup completo precisa incluir ambos os volumes. Uploads não entram no Git.
+
+Para revisar, cadastre uma carta deixando português vazio, troque o jogo e
+confira o reset das edições, selecione uma foto para ver a prévia e envie.
+A carta deve aparecer na lista com sua miniatura. Teste também um arquivo
+inválido e uma imagem acima do limite. No Network do navegador, acompanhe
+as chamadas das edições e o POST de cadastro.
+
+Verificado em 10/09/2026: três listas de edições, autenticação, CSRF, campos
+inválidos, vínculo jogo/edição, arquivos falsos/SVG, limites de upload e corpo
+HTTP, JPEG/PNG/WebP, imagem autenticada e rejeição de caminho arbitrário.
+No Edge automatizado: troca rápida de jogo, loading, reset, falha e nova
+tentativa, preservação de formulário, cadastro com redirecionamento, miniatura,
+texto seguro e viewport móvel. Ferramentas de teste foram usadas fora do
+projeto; não são dependências de execução. Registros e imagens de teste removidos.
 
 ## Banco e carga inicial
 
@@ -156,8 +217,8 @@ puro na tabela. Estas são credenciais públicas de demonstração local.
 O usuário pode ser usado na tela de login após executar a inicialização.
 
 Reexecutar preserva registros existentes, incluindo a senha do admin, e não
-duplica os dados iniciais. Não há cartas de exemplo nesta etapa: o cadastro
-com imagem será implementado junto ao CRUD.
+duplica os dados iniciais. Não há cartas de exemplo no seed: use o formulário
+para cadastrar cartas com suas imagens.
 
 O script funciona também com o volume já criado. `CREATE TABLE IF NOT EXISTS`
 não atualiza a estrutura de tabelas existentes; futuras alterações de schema
@@ -175,7 +236,7 @@ A carta referencia a edição, que identifica o jogo. Não há campo de jogo
 duplicado em `cards`. Chaves estrangeiras impedem referências inexistentes e
 exclusão de edições em uso. `name_pt` aceita NULL; os demais campos do cadastro
 são obrigatórios. A raridade é texto, pois o PDF não define opções. A imagem
-será um arquivo, com somente seu caminho armazenado no banco.
+é um arquivo, com somente seu nome armazenado no banco.
 
 Validação em 09/09/2026: inicialização repetida sem duplicação, hash de senha
 verificado, nome português nulo aceito e rejeição de edição inexistente,

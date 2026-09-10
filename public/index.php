@@ -25,6 +25,10 @@ require_login();
         </form>
         <section aria-labelledby="cards-heading">
             <h2 id="cards-heading">Cartas cadastradas</h2>
+            <a href="/card-new.php">Cadastrar carta</a>
+            <?php if (($_GET['created'] ?? '') === '1'): ?>
+                <p role="status">Carta cadastrada com sucesso.</p>
+            <?php endif; ?>
             <p id="cards-status" role="status">Carregando cartas…</p>
             <button id="cards-retry" type="button" hidden>Tentar novamente</button>
             <a id="cards-login" href="/login.php" hidden>Entrar novamente</a>
@@ -34,6 +38,7 @@ require_login();
                 <table id="cards-table" hidden>
                     <caption>Cartas cadastradas, em ordem de nome em inglês</caption>
                     <thead><tr>
+                        <th scope="col">Imagem</th>
                         <th scope="col">Nome em inglês</th>
                         <th scope="col">Nome em português</th>
                         <th scope="col">Card Game</th>

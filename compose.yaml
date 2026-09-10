@@ -13,6 +13,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-liga_local_dev}
     volumes:
       - .:/var/www/html
+      - uploads_data:/var/www/html/storage/uploads
     depends_on:
       db:
         condition: service_healthy
@@ -35,3 +36,4 @@ services:
 
 volumes:
   mysql_data:
+  uploads_data:
