@@ -9,7 +9,7 @@ O PDF e o email fornecido não informam prazo de entrega.
 - [x] Compose com PHP/Apache e MySQL isolado do banco local.
 - [x] Conexão PDO com utf8mb4 e prepared statements nativos.
 - [x] Validar build, inicialização, conexão e acesso HTTP.
-- [ ] Implementar interface com HTML5, CSS3 e JavaScript Vanilla, sem bibliotecas ou dependências externas.
+- [x] Implementar interface com HTML5, CSS3 e JavaScript Vanilla, sem bibliotecas ou dependências externas.
 
 ## Requisitos funcionais — páginas 1 a 3
 
@@ -34,18 +34,20 @@ O PDF e o email fornecido não informam prazo de entrega.
 - [x] Consultas parametrizadas e renderização segura de textos nos fluxos atuais.
 - [x] Upload com limite, validação do conteúdo e nome gerado pelo servidor.
 - [x] Tratar loading, erro e lista vazia, inclusive troca rápida de jogo.
-- [ ] Interface responsiva e operação por teclado.
-- [ ] Verificar fluxos positivos e falhas relevantes.
+- [x] Interface responsiva e operação por teclado nos fluxos verificados.
+- [x] Verificar fluxos positivos e falhas relevantes.
 
 ## Entrega — página 4
 
 - [ ] GitHub público ou acesso para liga-LeonardoWada e cauaneroberta.
-- [ ] README completo com inicialização testada do zero.
+- [x] README completo com inicialização testada do zero.
 - [x] Credenciais válidas de login documentadas.
 - [x] Pelo menos duas decisões de UX/Produto implementadas e justificadas.
-- [ ] Código autoral e sem ferramentas proibidas; política de IA não detalhada no PDF.
+- [x] Implementação sem frameworks ou bibliotecas proibidas.
+- [ ] Revisão pessoal do código pelo candidato para explicar as decisões e avaliar
+  a exigência de autoria; política de IA não detalhada no PDF.
 - [x] Schema e massa inicial do banco.
-- [ ] CRUD e autenticação com todos os endpoints e fluxos sem erros de execução.
+- [x] CRUD e autenticação operando sem erros de execução nos fluxos verificados.
 
 ## Verificação da primeira etapa — 08/09/2026
 
@@ -105,4 +107,18 @@ O PDF e o email fornecido não informam prazo de entrega.
 - [x] POST com autenticação, CSRF e validações, transações com bloqueio da carta.
 - [x] Tratar carta inexistente ou excluída enquanto o formulário está aberto.
 - [x] Testar API e navegador, incluindo arquivos, cancelamento e falha/repetição.
-- Revisão final da interface, instalação limpa e entrega continuam pendentes.
+- Nesta etapa, a instalação limpa e a revisão final ainda estavam pendentes.
+
+## Verificação final — 10/09/2026
+
+- [x] Clonar o commit 9d1060e do GitHub em diretório temporário.
+- [x] Subir aplicação com banco e uploads em volumes novos, na porta 8081.
+- [x] Executar instruções do README e repetir seed sem duplicação.
+- [x] Login por teclado, cadastro real, edição e exclusão no Edge.
+- [x] Persistência de carta e imagem após reiniciar app e banco.
+- [x] Formulário sem overflow horizontal em larguras 320, 390 e 1280.
+- [x] Modal com foco em Cancelar, cancelamento por Escape e exclusão confirmada.
+- [x] Arquivos internos inacessíveis por HTTP e API protegida após logout.
+- [x] Registros e imagens temporários removidos.
+- Acesso dos avaliadores e envio do link não foram executados nesta revisão.
+- A revisão guiada do código e as melhorias opcionais permanecem para depois.

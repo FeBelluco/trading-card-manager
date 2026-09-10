@@ -7,7 +7,9 @@ HTML5, CSS3 e JavaScript Vanilla.
 
 Ambiente, conexão PDO, schema, dados iniciais e autenticação implementados.
 Login, logout, listagem, cadastro, edição e exclusão de cartas com imagens
-funcionam. A revisão final da interface e da entrega permanece pendente.
+funcionam. A instalação limpa e os fluxos principais foram verificados em
+10/09/2026. Para a entrega, confirme o acesso dos avaliadores ao repositório
+privado e envie o link. Resultado detalhado em [docs/verification.md](docs/verification.md).
 O progresso está em [docs/checklist.md](docs/checklist.md).
 
 Base validada em 08/09/2026: build e inicialização, PHP 8.4.25, MySQL 8.4.11,
@@ -28,7 +30,14 @@ Essas tags recebem atualizações de patch; não estão fixadas por digest.
 
 ## Inicialização
 
-Na raiz do projeto:
+Obtenha o projeto (é necessário ter acesso ao repositório se ele estiver privado):
+
+```sh
+git clone https://github.com/FeBelluco/ligamagic-card-manager.git
+cd ligamagic-card-manager
+```
+
+Na raiz do projeto, com o Docker Desktop em execução:
 
 ```sh
 docker compose up --build -d --wait
@@ -84,11 +93,14 @@ docs/         checklist dos requisitos
 storage/      ponto de montagem do volume de imagens (fora da pasta pública)
 ```
 
-## Próximas etapas
+## Entrega e melhorias futuras
 
-1. Revisão da interface e testes finais dos fluxos completos.
-2. Testar instalação do zero e conferir o checklist da entrega.
-3. Liberar acesso aos avaliadores no GitHub e enviar o link do repositório.
+1. Conferir acesso de `liga-LeonardoWada` e `cauaneroberta` ao GitHub privado.
+2. Enviar o link do repositório pelo canal do processo seletivo.
+
+Melhorias opcionais reservadas para depois: apresentar raridade junto à sigla
+da edição em maiúsculas e adicionar tipo da carta como campo opcional. Esses
+itens não são exigências do PDF e não fazem parte da implementação atual.
 
 ## Autenticação e verificação manual
 
