@@ -13,7 +13,7 @@ O PDF e o email fornecido não informam prazo de entrega.
 
 ## Requisitos funcionais — páginas 1 a 3
 
-- [ ] Login e senha, com acesso administrativo protegido.
+- [x] Login e senha, com acesso administrativo protegido.
 - [ ] Listar cartas.
 - [ ] Incluir cartas.
 - [ ] Editar cartas.
@@ -29,7 +29,7 @@ O PDF e o email fornecido não informam prazo de entrega.
 
 ## Qualidade proposta — escolhas de implementação
 
-- [ ] Sessões, hash de senha e proteção CSRF.
+- [x] Sessões, hash de senha e proteção CSRF no login/logout.
 - [ ] Validação no servidor, incluindo vínculo entre edição e jogo.
 - [ ] Consultas parametrizadas e renderização segura de textos.
 - [ ] Upload com limite, validação do conteúdo e nome gerado pelo servidor.
@@ -41,8 +41,8 @@ O PDF e o email fornecido não informam prazo de entrega.
 
 - [ ] GitHub público ou acesso para liga-LeonardoWada e cauaneroberta.
 - [ ] README completo com inicialização testada do zero.
-- [ ] Credenciais válidas de login documentadas.
-- [ ] Pelo menos duas decisões de UX/Produto implementadas e justificadas.
+- [x] Credenciais válidas de login documentadas.
+- [x] Pelo menos duas decisões de UX/Produto implementadas e justificadas.
 - [ ] Código autoral e sem ferramentas proibidas; política de IA não detalhada no PDF.
 - [x] Schema e massa inicial do banco.
 - [ ] CRUD e autenticação com todos os endpoints e fluxos sem erros de execução.
@@ -65,5 +65,12 @@ O PDF e o email fornecido não informam prazo de entrega.
 - [x] Validar senha com password_verify e rejeitar senha incorreta.
 - [x] Validar nome português opcional, edição inexistente, edição em uso,
   nome inglês vazio e login duplicado, revertendo dados de teste.
-- A criação do usuário não conclui o requisito de autenticação: tela, sessão
-  e proteção dos endpoints continuam pendentes.
+- Nesta etapa, a criação do usuário ainda não incluía a autenticação.
+
+## Terceira etapa — autenticação
+
+- [x] Formulário HTML e CSS com validação no servidor e saída escapada.
+- [x] Login via PDO e password_verify, com renovação do ID de sessão.
+- [x] Página inicial protegida, logout POST e CSRF no login/logout.
+- [x] Cookies HttpOnly/SameSite, Secure sob HTTPS e respostas sem cache.
+- Novos endpoints de cartas deverão aplicar autenticação e CSRF nas alterações.

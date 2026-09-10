@@ -5,8 +5,8 @@ HTML5, CSS3 e JavaScript Vanilla.
 
 ## Estado atual
 
-Ambiente, conexão PDO, schema e dados iniciais implementados.
-Login, CRUD e interface final ainda não foram implementados; a página é provisória.
+Ambiente, conexão PDO, schema, dados iniciais e autenticação implementados.
+Login e logout funcionam; CRUD e interface final de cartas ainda estão pendentes.
 O progresso está em [docs/checklist.md](docs/checklist.md).
 
 Base validada em 08/09/2026: build e inicialização, PHP 8.4.25, MySQL 8.4.11,
@@ -35,8 +35,8 @@ docker compose exec -T app php scripts/check-environment.php
 docker compose exec -T app php scripts/init-database.php
 ```
 
-Acesse http://localhost:8080. Nesta etapa aparece somente a página provisória
-“Gerenciador de Cartas”. O verificador confirma extensões e uma consulta real
+Acesse http://localhost:8080. Sem sessão, você será direcionado ao login.
+O verificador confirma extensões e uma consulta real
 ao banco usando o usuário da aplicação.
 
 O primeiro build precisa de internet para baixar as imagens e pode demorar.
@@ -84,12 +84,34 @@ docs/         checklist dos requisitos
 
 ## Próximas etapas
 
-1. Login, sessões e proteção dos endpoints administrativos.
-2. CRUD e upload de imagens.
-3. Interface, manipulação do DOM e carregamento das edições com fetch.
-4. Verificação final e documentação das decisões de UX.
+1. CRUD e upload de imagens, protegendo cada novo endpoint com autenticação.
+2. Interface, manipulação do DOM e carregamento das edições com fetch.
+3. Verificação final e revisão das decisões de UX.
 
-As decisões de UX serão documentadas aqui quando forem implementadas.
+## Autenticação e verificação manual
+
+Entre com `admin` / `LigaDev2026!`. O formulário envia POST ao PHP, que consulta
+o usuário com PDO, verifica o hash e renova o ID de sessão. A página inicial
+exige sessão e o logout aceita somente POST com token CSRF. O login também
+valida CSRF. Não há JWT ou senha armazenada no navegador.
+
+1. Abra `/` em uma janela privativa: deve redirecionar para `/login.php`.
+2. Use senha incorreta: deve mostrar erro e manter o usuário preenchido.
+3. Use as credenciais corretas: deve abrir a área administrativa com seu nome.
+4. Clique em Sair e tente acessar `/` novamente: deve exigir login.
+5. Use Tab para percorrer campos e botão; Enter envia o formulário.
+
+Os cookies usam HttpOnly, SameSite=Lax e Secure quando o acesso ocorre por
+HTTPS. Em localhost HTTP, Secure fica desativado. Respostas de autenticação
+e da área protegida usam Cache-Control: no-store. Limitação atual: ainda não
+há limitação de tentativas de login; o ambiente é local de demonstração.
+
+## Decisões de UX implementadas
+
+- Preservar o usuário após erro, deixando a senha vazia: reduz redigitação e
+  evita devolver a senha no HTML.
+- Usar rótulos visíveis, autocomplete de credenciais e foco destacado: facilita
+  o uso por teclado e com gerenciadores de senhas, sem depender de placeholders.
 
 ## Banco e carga inicial
 
@@ -102,7 +124,7 @@ as 15 edições do JSON do PDF e cria o usuário de desenvolvimento:
 
 A senha é armazenada como hash gerado por `password_hash`, nunca como texto
 puro na tabela. Estas são credenciais públicas de demonstração local.
-O usuário já existe no banco, mas a tela e o fluxo de login ainda não estão prontos.
+O usuário pode ser usado na tela de login após executar a inicialização.
 
 Reexecutar preserva registros existentes, incluindo a senha do admin, e não
 duplica os dados iniciais. Não há cartas de exemplo nesta etapa: o cadastro

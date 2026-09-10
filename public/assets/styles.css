@@ -1,0 +1,32 @@
+:root {
+    font-family: system-ui, sans-serif;
+    color: #172538;
+    background: #f1f4f8;
+    line-height: 1.5;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; padding: 48px 20px; }
+main {
+    margin: 0 auto;
+    padding: 32px;
+    background: #fff;
+    border: 1px solid #d8e0ea;
+    border-radius: 12px;
+}
+.login-panel { max-width: 440px; }
+.portal-panel { max-width: 800px; }
+h1 { margin: 0 0 16px; line-height: 1.2; }
+.eyebrow { color: #465871; font-weight: 600; margin-top: 0; }
+form { display: grid; gap: 12px; }
+label { font-weight: 600; }
+input, button { font: inherit; padding: 12px; border-radius: 6px; }
+input { width: 100%; min-width: 0; border: 1px solid #687c95; }
+button { background: #174a96; color: #fff; border: 0; cursor: pointer; margin-top: 12px; }
+button:hover { background: #103771; }
+:focus-visible { outline: 3px solid #b35b00; outline-offset: 3px; }
+.error { color: #8c1825; background: #fff0f1; padding: 12px; border-radius: 6px; }
+@media (max-width: 480px) {
+    body { padding: 24px 12px; }
+    main { padding: 24px 20px; }
+}
