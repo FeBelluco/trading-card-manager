@@ -8,6 +8,7 @@ require_login();
 ?>
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,46 +17,47 @@ require_login();
     <script type="module" src="/assets/cards.js"></script>
     <meta name="csrf-token" content="<?= escape(csrf_token()) ?>">
 </head>
+
 <body class="catalog-page">
     <main class="portal-panel">
-<header class="portal-header">
-    <div class="portal-brand">
-        <svg class="brand-icon" viewBox="0 0 48 48"
-            fill="none" aria-hidden="true">
-            <rect x="7" y="5" width="25" height="34" rx="4"
-                stroke="currentColor" stroke-width="2"
-                transform="rotate(-12 7 5)" />
-            <rect x="15" y="9" width="25" height="34" rx="4"
-                fill="currentColor" />
-        </svg>
+        <header class="portal-header">
+            <div class="portal-brand">
+                <svg class="brand-icon" viewBox="0 0 48 48"
+                    fill="none" aria-hidden="true">
+                    <rect x="7" y="5" width="25" height="34" rx="4"
+                        stroke="currentColor" stroke-width="2"
+                        transform="rotate(-12 7 5)" />
+                    <rect x="15" y="9" width="25" height="34" rx="4"
+                        fill="currentColor" />
+                </svg>
 
-        <div>
-            <h1>Gerenciador de Cartas</h1>
-            <p>Painel administrativo</p>
-        </div>
-    </div>
+                <div>
+                    <h1>Gerenciador de Cartas</h1>
+                    <p>Painel administrativo</p>
+                </div>
+            </div>
 
-    <div class="account-actions">
-        <span>Olá, <?= escape($_SESSION['username']) ?>.</span>
+            <div class="account-actions">
+                <span>Olá, <?= escape($_SESSION['username']) ?>.</span>
 
-        <form class="logout-form" method="post" action="/logout.php">
-            <input type="hidden" name="csrf_token"
-                value="<?= escape(csrf_token()) ?>">
-            <button type="submit">Sair</button>
-        </form>
-    </div>
-</header>
+                <form class="logout-form" method="post" action="/logout.php">
+                    <input type="hidden" name="csrf_token"
+                        value="<?= escape(csrf_token()) ?>">
+                    <button type="submit">Sair</button>
+                </form>
+            </div>
+        </header>
         <section aria-labelledby="cards-heading">
-<div class="list-header">
-    <div>
-        <h2 id="cards-heading">Cartas cadastradas</h2>
-        <p>Gerencie seu catálogo de Magic, Pokémon e Yu-Gi-Oh!</p>
-    </div>
+            <div class="list-header">
+                <div>
+                    <h2 id="cards-heading">Cartas cadastradas</h2>
+                    <p>Gerencie seu catálogo de Magic, Pokémon e Yu-Gi-Oh!</p>
+                </div>
 
-    <a class="button-link" href="/card-new.php">
-        <span aria-hidden="true">＋</span> Cadastrar carta
-    </a>
-</div>
+                <a class="button-link" href="/card-new.php">
+                    <span aria-hidden="true">＋</span> Cadastrar carta
+                </a>
+            </div>
             <?php
             $successMessage = '';
 
@@ -69,20 +71,24 @@ require_login();
             <p id="cards-status" role="status">Carregando cartas…</p>
             <button id="cards-retry" type="button" hidden>Tentar novamente</button>
             <a id="cards-login" href="/login.php" hidden>Entrar novamente</a>
-            <noscript><p>Ative o JavaScript para visualizar a lista de cartas.</p></noscript>
+            <noscript>
+                <p>Ative o JavaScript para visualizar a lista de cartas.</p>
+            </noscript>
             <div id="cards-region" class="table-scroll" aria-busy="true"
                 role="region" aria-label="Lista de cartas" tabindex="0">
                 <table id="cards-table" class="cards-table" hidden>
                     <caption>Cartas cadastradas, em ordem de nome em inglês</caption>
-                    <thead><tr>
-                        <th scope="col">Imagem</th>
-                        <th scope="col">Nome em inglês</th>
-                        <th scope="col">Nome em português</th>
-                        <th scope="col">Card Game</th>
-                        <th scope="col">Edição</th>
-                        <th scope="col">Raridade</th>
-                        <th scope="col">Ações</th>
-                    </tr></thead>
+                    <thead>
+                        <tr>
+                            <th scope="col">Imagem</th>
+                            <th scope="col">Nome em inglês</th>
+                            <th scope="col">Nome em português</th>
+                            <th scope="col">Card Game</th>
+                            <th scope="col">Edição</th>
+                            <th scope="col">Raridade</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
                     <tbody id="cards-rows"></tbody>
                 </table>
             </div>
@@ -118,4 +124,5 @@ require_login();
         </dialog>
     </main>
 </body>
+
 </html>

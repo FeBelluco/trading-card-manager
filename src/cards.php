@@ -28,8 +28,15 @@ function list_cards(): array
 function validate_card(array $input): array
 {
     $errors = [];
-    foreach (['name_en' => 255, 'name_pt' => 255, 'rarity' => 100,
-        'card_game_id' => 16, 'edition_id' => 16] as $field => $limit) {
+    foreach (
+        [
+            'name_en' => 255,
+            'name_pt' => 255,
+            'rarity' => 100,
+            'card_game_id' => 16,
+            'edition_id' => 16
+        ] as $field => $limit
+    ) {
         $value = $input[$field] ?? '';
         $minimum = $field === 'name_pt' ? 0 : 1;
         if (!is_string($value) || preg_match('/\A.{' . $minimum . ',' . $limit . '}\z/us', trim($value)) !== 1) {

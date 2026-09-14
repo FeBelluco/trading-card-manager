@@ -47,23 +47,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Entrar — Gerenciador de Cartas</title>
     <link rel="stylesheet" href="/assets/styles.css">
 </head>
+
 <body class="login-page">
     <main class="login-panel">
         <header class="login-brand">
-                <svg class="brand-icon" viewBox="0 0 48 48"
-            fill="none" aria-hidden="true">
-            <rect x="7" y="5" width="25" height="34" rx="4"
-                stroke="currentColor" stroke-width="2"
-                transform="rotate(-12 7 5)" />
-            <rect x="15" y="9" width="25" height="34" rx="4"
-                fill="currentColor" />
-        </svg>
+            <svg class="brand-icon" viewBox="0 0 48 48"
+                fill="none" aria-hidden="true">
+                <rect x="7" y="5" width="25" height="34" rx="4"
+                    stroke="currentColor" stroke-width="2"
+                    transform="rotate(-12 7 5)" />
+                <rect x="15" y="9" width="25" height="34" rx="4"
+                    fill="currentColor" />
+            </svg>
             <p class="login-brand-name">Gerenciador de Cartas</p>
             <p>Painel administrativo</p>
         </header>
@@ -115,4 +117,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <footer class="login-footer">Acesso administrativo</footer>
     </main>
 </body>
+
 </html>
