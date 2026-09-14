@@ -34,7 +34,23 @@ function renderCards(cards) {
         image.className = 'card-thumbnail';
         image.loading = 'lazy';
         image.addEventListener('error', () => { imageCell.textContent = 'Imagem indisponível'; }, { once: true });
-        imageCell.append(image);
+
+        const imageButton = document.createElement('button');
+        imageButton.type = 'button';
+        imageButton.className = 'card-image-button';
+        imageButton.setAttribute('aria-label', `Ampliar imagem de ${card.name_en}`);
+        imageButton.append(image);
+
+        imageButton.addEventListener('click', () => {
+            imageDialogTitle.textContent = card.name_en;
+            imageDialogPhoto.src = image.src;
+            imageDialogPhoto.alt = `Carta ${card.name_en}`;
+
+           imageDialog.showModal();
+        });
+
+        imageCell.append(imageButton);
+
         row.append(imageCell);
         const values = [card.name_en, card.name_pt || '—', card.card_game_name,
             card.edition_name, card.rarity_label];
@@ -76,6 +92,10 @@ function renderCards(cards) {
         ? 'Nenhuma carta cadastrada.'
         : `${cards.length} ${cards.length === 1 ? 'carta encontrada' : 'cartas encontradas'}.`;
 }
+
+const imageDialog = document.getElementById('image-dialog');
+const imageDialogTitle = document.getElementById('image-dialog-title');
+const imageDialogPhoto = document.getElementById('image-dialog-photo');
 
 async function loadCards() {
     retry.hidden = true;

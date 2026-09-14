@@ -71,6 +71,13 @@ require_login();
                 <button id="delete-confirm" class="danger" type="button">Excluir carta</button>
             </div>
         </dialog>
+        <dialog id="image-dialog" aria-labelledby="image-dialog-title">
+            <h2 id="image-dialog-title"> Imagem da carta</h2>
+            <form method="dialog">
+                <button type="submit">Fechar</button>
+            </form>
+<img id="image-dialog-photo" alt="">
+        </dialog>
     </main>
 </body>
 </html>

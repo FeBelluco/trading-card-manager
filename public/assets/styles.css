@@ -20,31 +20,100 @@ h1 { margin: 0 0 16px; line-height: 1.2; }
 .eyebrow { color: #465871; font-weight: 600; margin-top: 0; }
 form { display: grid; gap: 12px; }
 label { font-weight: 600; }
-input, button { font: inherit; padding: 12px; border-radius: 6px; }
-input { width: 100%; min-width: 0; border: 1px solid #687c95; }
-button { background: #174a96; color: #fff; border: 0; cursor: pointer; margin-top: 12px; }
+input, button { 
+    font: inherit; 
+    padding: 12px; 
+    border-radius: 6px; 
+}
+input { 
+    width: 100%; 
+    min-width: 0; 
+    border: 1px solid #687c95; 
+}
+button { 
+    background: #174a96; 
+    color: #fff; 
+    border: 0; 
+    cursor: pointer; 
+    margin-top: 12px; 
+}
 button:hover { background: #103771; }
-:focus-visible { outline: 3px solid #b35b00; outline-offset: 3px; }
-.error { color: #8c1825; background: #fff0f1; padding: 12px; border-radius: 6px; }
+:focus-visible { 
+    outline: 3px solid #b35b00; 
+    outline-offset: 3px; 
+}
+.error { 
+    color: #8c1825; 
+    background: #fff0f1; 
+    padding: 12px; 
+    border-radius: 6px; 
+}
 .logout-form { justify-content: start; }
 .table-scroll { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; text-align: left; }
-caption { text-align: left; margin-bottom: 12px; color: #465871; }
-th, td { padding: 12px; border-bottom: 1px solid #d8e0ea; overflow-wrap: anywhere; }
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: left; 
+}
+caption { 
+    text-align: left; 
+    margin-bottom: 12px; 
+    color: #465871; 
+}
+th, td { 
+    padding: 12px; 
+    border-bottom: 1px solid #d8e0ea; 
+    overflow-wrap: anywhere; 
+}
 th { background: #f1f4f8; }
 td { min-width: 140px; vertical-align: top; }
 a { color: #174a96; }
-fieldset { display: grid; gap: 8px; border: 1px solid #d8e0ea; padding: 20px; min-width: 0; }
+fieldset { 
+    display: grid; 
+    gap: 8px; 
+    border: 1px solid #d8e0ea; 
+    padding: 20px; 
+    min-width: 0; 
+}
 legend { font-weight: 600; }
-select { font: inherit; padding: 12px; border: 1px solid #687c95; border-radius: 6px; width: 100%; }
-button:disabled { opacity: .6; cursor: not-allowed; }
+select { 
+    font: inherit; 
+    padding: 12px;
+    border: 1px solid #687c95; 
+    border-radius: 6px; 
+    width: 100%; 
+}
+button:disabled { 
+    opacity: .6; 
+    cursor: not-allowed; 
+}
 .field-error { color: #8c1825; }
 [aria-invalid="true"] { border-color: #8c1825; }
-.image-preview { max-width: 220px; max-height: 300px; object-fit: contain; }
-.card-thumbnail { width: 72px; height: 100px; object-fit: contain; }
-dialog { max-width: min(480px, calc(100vw - 32px)); border: 1px solid #d8e0ea; border-radius: 12px; padding: 24px; overflow-wrap: anywhere; }
-dialog::backdrop { background: rgb(0 0 0 / 45%); }
-.dialog-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.image-preview { 
+    max-width: 220px; 
+    max-height: 300px; 
+    object-fit: contain; 
+}
+.card-thumbnail { 
+    width: 72px; 
+    height: 100px; 
+    object-fit: contain; 
+}
+dialog { 
+    max-width: min(480px, calc(100vw - 32px)); 
+    border: 1px solid #d8e0ea; 
+    border-radius: 12px; 
+    padding: 24px; 
+    overflow-wrap: anywhere; 
+}
+dialog::backdrop { 
+    background: rgb(0 0 0 / 45%); 
+}
+.dialog-actions { 
+    display: flex; 
+    gap: 12px; 
+    flex-wrap: wrap; 
+}
 .danger { background: #a22030; }
 .danger:hover { background: #791724; }
 .portal-header {
@@ -55,14 +124,12 @@ dialog::backdrop { background: rgb(0 0 0 / 45%); }
     flex-wrap: wrap;
     margin-bottom: 24px;
 }
-
 .portal-header p {
     margin: 0;
 }
 .portal-header .logout-form button {
     margin-top: 0;
 }
-
 .button-link {
     display: inline-block;
     padding: 12px 16px;
@@ -72,11 +139,37 @@ dialog::backdrop { background: rgb(0 0 0 / 45%); }
     font-weight: 600;
     text-decoration: none;
 }
-
 .button-link:hover {
     background: #103771;
 }
-
+.card-image-button {
+    display: block;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    cursor: zoom-in;
+}
+.card-image-button:hover {
+    background: transparent;
+}
+.card-image-button img {
+    display: block;
+}
+#image-dialog {
+    width: min(600px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    max-height: calc(100dvh - 32px);
+    overflow: auto;
+}
+#image-dialog-photo {
+    display: block;
+    max-width: 100%;
+    max-height: 65dvh;
+    width: auto;
+    height: auto;
+    margin: 16px auto 0;
+    object-fit: contain;
+}
 @media (max-width: 480px) {
     body { padding: 24px 12px; }
     main { padding: 24px 20px; }
