@@ -13,6 +13,15 @@ const actionStatus = document.querySelector('#cards-action-status');
 let selectedCard;
 let deleting = false;
 
+const pageUrl = new URL(window.location.href);
+
+if (pageUrl.searchParams.has('updated') || pageUrl.searchParams.has('created')) {
+    pageUrl.searchParams.delete('updated');
+    pageUrl.searchParams.delete('created');
+
+    window.history.replaceState(window.history.state, '', pageUrl.href);
+}
+
 function renderCards(cards) {
     const fragment = document.createDocumentFragment();
 
