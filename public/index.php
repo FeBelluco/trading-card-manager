@@ -18,15 +18,20 @@ require_login();
 </head>
 <body>
     <main class="portal-panel">
-        <h1>Gerenciador de Cartas</h1>
-        <p>Olá, <?= escape($_SESSION['username']) ?>.</p>
-        <form class="logout-form" method="post" action="/logout.php">
-            <input type="hidden" name="csrf_token" value="<?= escape(csrf_token()) ?>">
-            <button type="submit">Sair</button>
-        </form>
+        <header class="portal-header">
+            <div>
+                <h1>Gerenciador de Cartas</h1>
+                <p>Olá, <?= escape($_SESSION['username']) ?>.</p>
+            </div>
+
+            <form class="logout-form" method="post" action="/logout.php">
+                <input type="hidden" name="csrf_token" value="<?= escape(csrf_token()) ?>">
+                <button type="submit">Sair</button>
+            </form>
+        </header>
         <section aria-labelledby="cards-heading">
             <h2 id="cards-heading">Cartas cadastradas</h2>
-            <a href="/card-new.php">Cadastrar carta</a>
+            <a class="button-link" href="/card-new.php">Cadastrar carta</a>
             <?php if (($_GET['created'] ?? '') === '1'): ?>
                 <p role="status">Carta cadastrada com sucesso.</p>
             <?php endif; ?>

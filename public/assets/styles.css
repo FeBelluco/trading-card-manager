@@ -47,6 +47,36 @@ dialog::backdrop { background: rgb(0 0 0 / 45%); }
 .dialog-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .danger { background: #a22030; }
 .danger:hover { background: #791724; }
+.portal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.portal-header p {
+    margin: 0;
+}
+.portal-header .logout-form button {
+    margin-top: 0;
+}
+
+.button-link {
+    display: inline-block;
+    padding: 12px 16px;
+    border-radius: 6px;
+    background: #174a96;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.button-link:hover {
+    background: #103771;
+}
+
 @media (max-width: 480px) {
     body { padding: 24px 12px; }
     main { padding: 24px 20px; }
