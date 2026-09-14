@@ -86,21 +86,21 @@ os volumes do banco e das imagens. Evite adicionar `-v`, pois essa opção exclu
 ```text
 public/       conteúdo acessível pelo navegador
 src/          código PHP da aplicação
-scripts/      verificações e futuros comandos de inicialização
+scripts/      verificação do ambiente e inicialização do banco
 database/     schema SQL e dados iniciais dos jogos e edições
 docker/       configuração de Apache e PHP
 docs/         checklist dos requisitos
 storage/      ponto de montagem do volume de imagens (fora da pasta pública)
 ```
 
-## Entrega e melhorias futuras
+## Entrega e escopo
 
 1. Conferir acesso de `liga-LeonardoWada` e `cauaneroberta` ao GitHub privado.
 2. Enviar o link do repositório pelo canal do processo seletivo.
 
-Melhorias opcionais reservadas para depois: apresentar raridade junto à sigla
-da edição em maiúsculas e adicionar tipo da carta como campo opcional. Esses
-itens não são exigências do PDF e não fazem parte da implementação atual.
+A listagem apresenta a raridade junto à sigla da edição em maiúsculas, como
+`Rara (HOB)`. Essa apresentação é uma escolha adicional de interface.
+Os jogos compartilham a mesma listagem, ordenada por nome em inglês.
 
 ## Autenticação e verificação manual
 
@@ -130,6 +130,8 @@ há limitação de tentativas de login; o ambiente é local de demonstração.
   risco de remover o registro errado e oferece uma saída imediata pelo teclado.
 - Na edição, manter a imagem quando nenhuma nova é enviada: evita exigir que
   o usuário procure o arquivo novamente para corrigir apenas um texto.
+- Destacar Cadastrar carta como ação principal e posicionar Sair no cabeçalho:
+  facilita encontrar o cadastro e separa a ação de sessão das ações das cartas.
 
 ## Listagem de cartas
 
@@ -142,6 +144,9 @@ porque não altera dados; o cadastro exige o token.
 
 `src/cards.php` contém a consulta SQL; `public/api/cards.php` trata HTTP e
 autenticação; `public/assets/cards.js` cria as linhas pelo DOM, com textContent.
+O PHP acrescenta `rarity_label` ao resultado, combinando raridade e sigla da
+edição em maiúsculas. O JavaScript exibe esse campo; os valores originais e os
+identificadores armazenados no banco permanecem separados e inalterados.
 Há estados de carregamento, lista vazia, erro com nova tentativa e sessão expirada.
 A listagem mostra miniaturas por `/image.php?id=ID`, com autenticação, e ainda
 não tem paginação. A consulta carrega todas as cartas, adequada à massa pequena

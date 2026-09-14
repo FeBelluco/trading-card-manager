@@ -121,4 +121,12 @@ O PDF e o email fornecido não informam prazo de entrega.
 - [x] Arquivos internos inacessíveis por HTTP e API protegida após logout.
 - [x] Registros e imagens temporários removidos.
 - Acesso dos avaliadores e envio do link não foram executados nesta revisão.
-- A revisão guiada do código e as melhorias opcionais permanecem para depois.
+- Naquela etapa, a revisão guiada e as melhorias opcionais permaneciam para depois.
+
+## Revisão da listagem — 14/09/2026
+
+- [x] Raridade com sigla da edição em maiúsculas, formatada no PHP e exibida pelo JS.
+- [x] Cadastro destacado e logout no cabeçalho, com quebra de linha em telas estreitas.
+- [x] README atualizado para as funcionalidades entregues.
+- [x] Sintaxe, conexão, login/logout, API, DOM e layout verificados sem alterar cartas.
+- Convites aos avaliadores e envio serão feitos pelo candidato; não foram verificados.

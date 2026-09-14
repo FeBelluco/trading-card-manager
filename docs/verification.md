@@ -48,3 +48,15 @@ imagem com remoção do arquivo anterior e tratamento de carta já excluída.
   estão registradas no README.
 - Conferir o acesso dos avaliadores ao repositório privado e enviar o link.
 - A revisão pessoal do código e as melhorias opcionais serão feitas depois.
+# Revisão da listagem — 14/09/2026
+
+- Sintaxe de `public/index.php`, `src/cards.php` e `public/assets/cards.js`: válida.
+- Verificador de ambiente: extensões PHP e conexão MySQL disponíveis.
+- Edge automatizado: login, resposta da API e correspondência de `rarity_label`
+  com a coluna da tabela nas duas cartas existentes.
+- Cabeçalho com Sair à direita em desktop, estilo do link Cadastrar carta e
+  navegação para o cadastro verificados.
+- Sem transbordamento horizontal da página nas larguras 320, 390 e 1280 pixels.
+- Logout seguido de HTTP 401 na API e ausência de erros JavaScript verificados.
+- Nenhuma carta ou imagem alterada. CRUD completo e instalação limpa não foram
+  repetidos nesta revisão; os resultados anteriores estão registrados abaixo.
