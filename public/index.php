@@ -56,13 +56,16 @@ require_login();
         <span aria-hidden="true">＋</span> Cadastrar carta
     </a>
 </div>
-            <?php if (($_GET['created'] ?? '') === '1'): ?>
-                <p class="success-notice" role="status">Carta cadastrada com sucesso.</p>
-            <?php endif; ?>
-            <?php if (($_GET['updated'] ?? '') === '1'): ?>
-                <p class="success-notice" role="status">Carta atualizada com sucesso.</p>
-            <?php endif; ?>
-            <p id="cards-action-status" class="success-notice" role="status"></p>
+            <?php
+            $successMessage = '';
+
+            if (($_GET['created'] ?? '') === '1') {
+                $successMessage = 'Carta cadastrada com sucesso.';
+            } elseif (($_GET['updated'] ?? '') === '1') {
+                $successMessage = 'Carta atualizada com sucesso.';
+            }
+            ?>
+            <p id="cards-action-status" class="success-notice" role="status"><?= escape($successMessage) ?></p>
             <p id="cards-status" role="status">Carregando cartas…</p>
             <button id="cards-retry" type="button" hidden>Tentar novamente</button>
             <a id="cards-login" href="/login.php" hidden>Entrar novamente</a>
