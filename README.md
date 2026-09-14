@@ -132,6 +132,8 @@ há limitação de tentativas de login; o ambiente é local de demonstração.
   o usuário procure o arquivo novamente para corrigir apenas um texto.
 - Destacar Cadastrar carta como ação principal e posicionar Sair no cabeçalho:
   facilita encontrar o cadastro e separa a ação de sessão das ações das cartas.
+- Permitir ampliar a imagem da carta sem sair da listagem: facilita conferir
+  detalhes, com fechamento pelo botão Fechar ou pela tecla Escape.
 
 ## Listagem de cartas
 
@@ -151,6 +153,10 @@ Há estados de carregamento, lista vazia, erro com nova tentativa e sessão expi
 A listagem mostra miniaturas por `/image.php?id=ID`, com autenticação, e ainda
 não tem paginação. A consulta carrega todas as cartas, adequada à massa pequena
 do desafio, mas exigiria paginação para um catálogo grande.
+
+As miniaturas são botões acessíveis por teclado. Ao acioná-las, um modal
+nativo do HTML exibe a imagem ampliada e o nome da carta. A imagem mantém
+suas proporções e tem dimensões limitadas ao espaço disponível na tela.
 
 Para revisar:
 
