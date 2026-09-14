@@ -7,7 +7,7 @@ require_once __DIR__ . '/uploads.php';
 
 function list_cards(): array
 {
-    return database()->query(
+    $cards = database()->query(
         'SELECT c.id, c.name_en, c.name_pt, c.rarity,
                 e.id AS edition_id, e.name AS edition_name,
                 g.id AS card_game_id, g.name AS card_game_name
@@ -16,6 +16,13 @@ function list_cards(): array
          INNER JOIN card_games g ON g.id = e.card_game_id
          ORDER BY c.name_en, c.id'
     )->fetchAll();
+
+    foreach ($cards as $index => $currentCard) {
+        $cards[$index]['rarity_label'] =
+            $currentCard['rarity'] . ' (' . strtoupper($currentCard['edition_id']) . ')';
+    }
+
+    return $cards;
 }
 
 function validate_card(array $input): array
@@ -83,7 +90,7 @@ function update_card(int $id, array $input, ?array $image): bool
         if ($newFilename !== null) remove_image($newFilename);
         throw $exception;
     }
-    // O arquivo antigo só é removido após o banco confirmar a alteração.
+    // o arquivo antigo só é removido após o banco confirmar a alteração.
     if ($newFilename !== null) remove_image($oldFilename);
     return true;
 }
@@ -128,7 +135,7 @@ function create_card(array $input, array $image): int
         ]);
         return (int) database()->lastInsertId();
     } catch (Throwable $exception) {
-        // O sistema de arquivos não participa da transação SQL.
+        //sistema de arquivos não participa da transação SQL.
         if (!unlink(uploads_directory() . '/' . $filename)) {
             error_log('Falha ao remover upload após erro de cadastro: ' . $filename);
         }

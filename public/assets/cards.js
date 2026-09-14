@@ -28,7 +28,7 @@ function renderCards(cards) {
         imageCell.append(image);
         row.append(imageCell);
         const values = [card.name_en, card.name_pt || '—', card.card_game_name,
-            card.edition_name, card.rarity];
+            card.edition_name, card.rarity_label];
 
         for (const value of values) {
             const cell = document.createElement('td');
