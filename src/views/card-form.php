@@ -13,7 +13,7 @@ $title = $editing ? 'Editar carta' : 'Cadastrar carta';
     <link rel="stylesheet" href="/assets/styles.css">
     <script type="module" src="/assets/card-form.js"></script>
 </head>
-<body>
+<body class="catalog-page card-form-page">
 <main class="portal-panel">
     <a href="/">Voltar à lista</a>
     <h1><?= escape($title) ?></h1>
@@ -28,6 +28,8 @@ $title = $editing ? 'Editar carta' : 'Cadastrar carta';
         <?php if ($editing): ?><input type="hidden" name="action" value="update"><?php endif; ?>
         <fieldset id="card-fields">
             <legend>Dados da carta</legend>
+            <div class="card-form-columns">
+            <div class="card-form-details">
             <label for="name_en">Nome em inglês</label>
             <input id="name_en" name="name_en" value="<?= escape($card['name_en'] ?? '') ?>" maxlength="255" required aria-describedby="name_en-error">
             <span id="name_en-error" class="field-error"></span>
@@ -52,6 +54,9 @@ $title = $editing ? 'Editar carta' : 'Cadastrar carta';
             <label for="rarity">Raridade</label>
             <input id="rarity" name="rarity" value="<?= escape($card['rarity'] ?? '') ?>" maxlength="100" required aria-describedby="rarity-error">
             <span id="rarity-error" class="field-error"></span>
+                    </div>
+
+        <div class="card-form-image">
             <label for="image">Imagem da carta</label>
             <input id="image" name="image" type="file" accept="image/jpeg,image/png,image/webp"
                 <?= $editing ? '' : 'required' ?> aria-describedby="image-help image-error">
@@ -61,9 +66,17 @@ $title = $editing ? 'Editar carta' : 'Cadastrar carta';
                 <p>Imagem atual</p>
                 <img class="image-preview" src="/image.php?id=<?= (int) $card['id'] ?>" alt="Imagem atual da carta">
             <?php endif; ?>
+            <p id="image-preview-label" hidden>Imagem selecionada</p>
             <img id="image-preview" class="image-preview" alt="Prévia da imagem selecionada" hidden>
+                    </div>
+    </div>
         </fieldset>
-        <button id="save-card" type="submit" disabled><?= $editing ? 'Salvar alterações' : 'Cadastrar carta' ?></button>
+            <div class="card-form-actions">
+                <a href="/" class="cancel-link">Cancelar</a>
+                 <button id="save-card" type="submit" disabled>
+                    <?= $editing ? 'Salvar alterações' : 'Cadastrar carta' ?>
+                </button>
+            </div>    
     </form>
 </main>
 </body>

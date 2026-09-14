@@ -1,4 +1,27 @@
+.catalog-page .success-notice:not(:empty) {
+    margin: 20px 0 12px;
+    padding: 14px 18px;
+    color: #c5f5db;
+    background: #103b2b;
+    border: 1px solid #438c68;
+    border-left-width: 4px;
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+}
+
+.success-notice:empty {
+    margin: 0;
+}
+
 :root {
+    --surface: #101c2d;
+    --surface-hover: #142238;
+    --border: #2a4059;
+    --text-primary: #f4f7fb;
+    --text-secondary: #9fb0c5;
+    --accent: #e4b84f;
+    --shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+
     font-family: system-ui, sans-serif;
     color: #172538;
     background: #f1f4f8;
@@ -6,7 +29,33 @@
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; padding: 48px 20px; }
+body {
+    margin: 0;
+    padding: 48px 20px;
+    min-height: 100vh;
+    background-color: #08111f;
+
+    background-image:
+        radial-gradient(
+            circle at top left,
+            rgba(228, 184, 79, 0.10),
+            transparent 35%
+        ),
+        linear-gradient(
+            rgba(159, 176, 197, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(159, 176, 197, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        auto,
+        24px 24px,
+        24px 24px;
+}
 main {
     margin: 0 auto;
     padding: 32px;
@@ -50,23 +99,81 @@ button:hover { background: #103771; }
 }
 .logout-form { justify-content: start; }
 .table-scroll { overflow-x: auto; }
-table { 
-    width: 100%; 
-    border-collapse: collapse; 
-    text-align: left; 
+.cards-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+    color: var(--text-primary);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
 }
-caption { 
-    text-align: left; 
-    margin-bottom: 12px; 
-    color: #465871; 
+
+.cards-table caption {
+    text-align: left;
+    margin-bottom: 12px;
+    color: #465871;
 }
-th, td { 
-    padding: 12px; 
-    border-bottom: 1px solid #d8e0ea; 
-    overflow-wrap: anywhere; 
+
+.cards-table th {
+    padding: 16px;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: #142136;
 }
-th { background: #f1f4f8; }
-td { min-width: 140px; vertical-align: top; }
+
+.cards-table td {
+    min-width: 140px;
+    padding: 16px;
+    vertical-align: middle;
+    border-top: 1px solid var(--border);
+}
+
+.cards-table th,
+.cards-table td {
+    overflow-wrap: anywhere;
+}
+
+.cards-table thead th:first-child {
+    border-top-left-radius: 15px;
+}
+
+.cards-table thead th:last-child {
+    border-top-right-radius: 15px;
+}
+
+.cards-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 15px;
+}
+
+.cards-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 15px;
+}
+
+.cards-table tbody tr {
+    transition: background-color 160ms ease;
+}
+
+.cards-table tbody tr:hover,
+.cards-table tbody tr:focus-within {
+    background: var(--surface-hover);
+}
+
+.cards-table a {
+    color: var(--accent);
+}
+
+.cards-table a:hover {
+    text-decoration-thickness: 2px;
+}
+
+.cards-table :focus-visible {
+    outline-color: var(--accent);
+}
 a { color: #174a96; }
 fieldset { 
     display: grid; 
@@ -94,10 +201,12 @@ button:disabled {
     max-height: 300px; 
     object-fit: contain; 
 }
-.card-thumbnail { 
-    width: 72px; 
-    height: 100px; 
-    object-fit: contain; 
+.card-thumbnail {
+    width: 72px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
 }
 dialog { 
     max-width: min(480px, calc(100vw - 32px)); 
@@ -156,21 +265,619 @@ dialog::backdrop {
     display: block;
 }
 #image-dialog {
-    width: min(600px, calc(100vw - 32px));
+    width: min(480px, calc(100vw - 32px));
     max-width: calc(100vw - 32px);
     max-height: calc(100dvh - 32px);
     overflow: auto;
 }
+
+/* Tema da página de listagem */
+.catalog-page {
+    min-height: 100vh;
+    padding: 0 24px 48px;
+    color: var(--text-primary);
+    background-color: #08111f;
+
+    background-image:
+        radial-gradient(
+            circle at top left,
+            rgba(228, 184, 79, 0.12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(228, 184, 79, 0.06),
+            transparent 25%
+        ),
+        linear-gradient(
+            rgba(159, 176, 197, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(159, 176, 197, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: auto, auto, 24px 24px, 24px 24px;
+}
+
+.catalog-page .portal-panel {
+    max-width: 1440px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+.catalog-page .portal-header {
+    align-items: center;
+    padding: 28px 0;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+}
+
+.portal-brand,
+.account-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.portal-brand {
+    min-width: 0;
+}
+
+.brand-icon {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    color: var(--accent);
+}
+
+.catalog-page .portal-header h1 {
+    margin: 0 0 4px;
+    font-size: 1.5rem;
+}
+
+.catalog-page .portal-header p,
+.list-header p {
+    color: var(--text-secondary);
+}
+
+.account-actions {
+    flex-wrap: wrap;
+}
+
+.catalog-page .logout-form button {
+    margin: 0;
+    padding: 10px 24px;
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid #687c95;
+}
+
+.catalog-page .logout-form button:hover {
+    background: var(--surface-hover);
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.list-header h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 3vw, 2.25rem);
+    line-height: 1.2;
+}
+
+.list-header p {
+    margin: 8px 0 0;
+}
+
+.catalog-page .button-link {
+    padding: 14px 22px;
+    color: #151b25;
+    background: linear-gradient(135deg, #f0cf77, #d9ac43);
+    border: 1px solid #f0cf77;
+    border-radius: 8px;
+}
+
+.catalog-page .button-link:hover {
+    background: #f0c967;
+}
+
+.catalog-page #cards-status:not(:empty) {
+    display: inline-block;
+    padding: 6px 14px;
+    margin: 20px 0;
+    font-size: 0.875rem;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+}
+
+.catalog-page #cards-status:not(.error) {
+    color: var(--text-secondary);
+    background: var(--surface);
+}
+
+.catalog-page .cards-table caption {
+    color: var(--text-secondary);
+}
+
+.catalog-page a {
+    color: var(--accent);
+}
+
+.catalog-page a.button-link {
+    color: #151b25;
+}
+
+.catalog-page :focus-visible {
+    outline-color: var(--accent);
+}
+
+/* Ações da tabela */
+.catalog-page .cards-table td:last-child {
+    white-space: nowrap;
+}
+
+.catalog-page .cards-table td:last-child br {
+    display: none;
+}
+
+.catalog-page .cards-table td:last-child a,
+.catalog-page .cards-table td:last-child button {
+    display: inline-block;
+    padding: 10px 14px;
+    margin: 0;
+    font-size: 0.875rem;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.catalog-page .cards-table td:last-child a {
+    color: var(--text-primary);
+    border: 1px solid #687c95;
+}
+
+.catalog-page .cards-table td:last-child a:hover {
+    background: var(--surface-hover);
+}
+
+.catalog-page .cards-table td:last-child .danger {
+    margin-left: 8px;
+    color: #ff8a94;
+    background: transparent;
+    border: 1px solid #ef6673;
+}
+
+.catalog-page .cards-table td:last-child .danger:hover {
+    background: rgba(239, 68, 68, 0.12);
+}
+
+/* Modais da listagem */
+.catalog-page dialog {
+    color: var(--text-primary);
+    background: var(--surface);
+    border-color: var(--border);
+}
+
+.catalog-page dialog::backdrop {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+@media (max-width: 600px) {
+    .catalog-page {
+        padding: 0 12px 24px;
+    }
+
+    .catalog-page .portal-header {
+        gap: 20px;
+        padding: 20px 0;
+        margin-bottom: 28px;
+    }
+
+    .catalog-page .portal-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .account-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .list-header {
+        align-items: flex-start;
+    }
+
+    .catalog-page .cards-table th,
+    .catalog-page .cards-table td {
+        padding: 12px;
+    }
+}
+
 #image-dialog-photo {
     display: block;
     max-width: 100%;
     max-height: 65dvh;
+    border-radius: 18px;
     width: auto;
     height: auto;
     margin: 16px auto 0;
     object-fit: contain;
 }
+
+.image-dialog-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+#image-dialog-title {
+    min-width: 0;
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.image-dialog-header form {
+    flex-shrink: 0;
+}
+
+#image-dialog .image-dialog-close {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+#image-dialog .image-dialog-close:hover {
+    background: var(--surface-hover);
+}
 @media (max-width: 480px) {
-    body { padding: 24px 12px; }
-    main { padding: 24px 20px; }
+    body {
+        padding: 24px 12px;
+    }
+
+    main {
+        padding: 24px 20px;
+    }
+
+    .cards-table th,
+    .cards-table td {
+        padding: 12px;
+    }
+}
+
+.login-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    padding: 32px 16px;
+    color: var(--text-primary);
+    background-color: #08111f;
+
+    background-image:
+        radial-gradient(
+            ellipse at top,
+            rgba(26, 82, 145, 0.35),
+            transparent 65%
+        ),
+        linear-gradient(
+            rgba(159, 176, 197, 0.05) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(159, 176, 197, 0.05) 1px,
+            transparent 1px
+        );
+
+    background-size: auto, 32px 32px, 32px 32px;
+}
+
+.login-page .login-panel {
+    width: 100%;
+    max-width: 440px;
+    min-width: 0;
+    margin: auto;
+    padding: 32px 24px 24px;
+    background: #0d1c2d;
+    border: 1px solid #3b526b;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+}
+
+.login-brand {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.login-brand > svg {
+    display: block;
+    margin: 0 auto 12px;
+    color: var(--accent);
+}
+
+.login-brand p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.login-brand .login-brand-name {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.login-page h1 {
+    margin-bottom: 8px;
+    font-size: 1.75rem;
+    text-align: center;
+}
+
+.login-description {
+    margin: 0 0 28px;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.login-page form {
+    gap: 10px;
+}
+
+.login-page label {
+    font-size: 0.875rem;
+}
+
+.login-input {
+    position: relative;
+    min-width: 0;
+    margin-bottom: 10px;
+}
+
+.login-input svg {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.login-page .login-input input {
+    min-height: 44px;
+    padding: 12px 14px 12px 46px;
+    color: var(--text-primary);
+    background: #0a1828;
+    border: 1px solid #687c95;
+    border-radius: 7px;
+}
+
+.login-input input::placeholder {
+    color: var(--text-secondary);
+    opacity: 1;
+}
+
+.login-page button {
+    min-height: 44px;
+    margin-top: 0;
+    color: #151b25;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f0cf77, #e4b84f);
+    border: 1px solid #f0cf77;
+    border-radius: 7px;
+}
+
+.login-page button:hover {
+    background: #f0c967;
+}
+
+.login-page :focus-visible {
+    outline-color: var(--accent);
+}
+
+.login-footer {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .login-page {
+        padding: 20px 12px;
+    }
+
+    .login-page .login-panel {
+        padding: 24px 20px;
+    }
+}
+
+/* cadastro */
+.card-form-page .portal-panel {
+    max-width: 1100px;
+    padding-top: 32px;
+}
+
+.card-form-page .portal-panel > h1 {
+    margin-top: 16px;
+}
+
+.card-form-page .portal-panel > p {
+    color: var(--text-secondary);
+}
+
+.card-form-page #card-form {
+    gap: 0;
+    margin-top: 24px;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.card-form-page #card-fields {
+    display: block;
+    padding: 0;
+    border: 0;
+}
+
+.card-form-page #card-fields > legend {
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+}
+
+.card-form-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 28px;
+}
+
+.card-form-details,
+.card-form-image {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    min-width: 0;
+}
+
+.card-form-image {
+    padding-left: 24px;
+    border-left: 1px solid var(--border);
+}
+
+.card-form-page input,
+.card-form-page select {
+    min-height: 44px;
+    color: var(--text-primary);
+    background: #0a1828;
+    border: 1px solid #687c95;
+    color-scheme: dark;
+}
+
+.card-form-page input::placeholder {
+    color: var(--text-secondary);
+}
+
+.card-form-page select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.card-form-page .field-error {
+    color: #ffadb5;
+}
+
+.card-form-page [aria-invalid="true"] {
+    border-color: #ffadb5;
+}
+
+.card-form-page .field-error:empty,
+.card-form-page #edition-status:empty {
+    display: none;
+}
+
+.card-form-details input,
+.card-form-details select {
+    margin-bottom: 8px;
+}
+
+.card-form-page #image {
+    padding: 16px;
+    border-style: dashed;
+}
+
+.card-form-page #image::file-selector-button {
+    padding: 8px 12px;
+    margin-right: 8px;
+    color: var(--text-primary);
+    background: var(--surface-hover);
+    border: 1px solid #687c95;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.card-form-page #image-help,
+.card-form-page #edition-status {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.card-form-image .image-preview {
+    max-width: 100%;
+    max-height: 280px;
+    border-radius: 12px;
+    margin: 12px auto 0;
+    object-fit: contain;
+}
+
+.card-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.card-form-page .cancel-link {
+    padding: 12px 24px;
+    color: var(--text-primary);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.card-form-page .cancel-link:hover {
+    background: var(--surface-hover);
+}
+
+.card-form-page #save-card {
+    margin: 0;
+    padding: 12px 24px;
+    color: #151b25;
+    font-weight: 700;
+    background: var(--accent);
+}
+
+.card-form-page #save-card:hover:not(:disabled) {
+    background: #f0c967;
+}
+
+@media (max-width: 700px) {
+    .card-form-page #card-form {
+        padding: 20px 16px;
+    }
+
+    .card-form-columns {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .card-form-image {
+        padding: 20px 0 0;
+        border-left: 0;
+        border-top: 1px solid var(--border);
+    }
 }

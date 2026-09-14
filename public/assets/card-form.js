@@ -9,6 +9,7 @@ const status = document.querySelector('#form-status');
 const login = document.querySelector('#form-login');
 const image = document.querySelector('#image');
 const preview = document.querySelector('#image-preview');
+const previewLabel = document.querySelector('#image-preview-label');
 const editing = form.dataset.editing === 'true';
 const saveLabel = editing ? 'Salvar alterações' : 'Cadastrar carta';
 let initialEdition = form.dataset.edition;
@@ -94,6 +95,7 @@ image.addEventListener('change', () => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     preview.removeAttribute('src');
     preview.hidden = true;
+    previewLabel.hidden = true;
     image.setCustomValidity('');
     image.removeAttribute('aria-invalid');
     document.querySelector('#image-error').textContent = '';
@@ -107,6 +109,7 @@ image.addEventListener('change', () => {
     previewUrl = URL.createObjectURL(file);
     preview.src = previewUrl;
     preview.hidden = false;
+    previewLabel.hidden = false;
 });
 
 form.addEventListener('submit', async (event) => {

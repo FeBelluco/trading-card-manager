@@ -53,24 +53,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Entrar — Gerenciador de Cartas</title>
     <link rel="stylesheet" href="/assets/styles.css">
 </head>
-<body>
+<body class="login-page">
     <main class="login-panel">
-        <p class="eyebrow">Gerenciador de Cartas</p>
+        <header class="login-brand">
+                <svg class="brand-icon" viewBox="0 0 48 48"
+            fill="none" aria-hidden="true">
+            <rect x="7" y="5" width="25" height="34" rx="4"
+                stroke="currentColor" stroke-width="2"
+                transform="rotate(-12 7 5)" />
+            <rect x="15" y="9" width="25" height="34" rx="4"
+                fill="currentColor" />
+        </svg>
+            <p class="login-brand-name">Gerenciador de Cartas</p>
+            <p>Painel administrativo</p>
+        </header>
+
         <h1>Entrar no portal</h1>
-        <p>Use suas credenciais para acessar a gestão de cartas.</p>
+        <p class="login-description">
+            Use suas credenciais para acessar a gestão de cartas.
+        </p>
+
         <?php if ($error !== ''): ?>
             <p class="error" role="alert"><?= escape($error) ?></p>
         <?php endif; ?>
+
         <form method="post" action="/login.php">
-            <input type="hidden" name="csrf_token" value="<?= escape(csrf_token()) ?>">
+            <input type="hidden" name="csrf_token"
+                value="<?= escape(csrf_token()) ?>">
+
             <label for="username">Usuário</label>
-            <input id="username" name="username" value="<?= escape($username) ?>"
-                autocomplete="username" maxlength="100" required>
+            <div class="login-input">
+                <svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.8"
+                    aria-hidden="true">
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 22v-3a8 8 0 0 1 16 0v3" />
+                </svg>
+                <input id="username" name="username"
+                    value="<?= escape($username) ?>"
+                    placeholder="Digite seu usuário"
+                    autocomplete="username" maxlength="100" required>
+            </div>
+
             <label for="password">Senha</label>
-            <input id="password" name="password" type="password"
-                autocomplete="current-password" maxlength="4096" required>
+            <div class="login-input">
+                <svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.8"
+                    aria-hidden="true">
+                    <rect x="4" y="10" width="16" height="12" rx="2" />
+                    <path d="M8 10V6a4 4 0 0 1 8 0v4" />
+                </svg>
+                <input id="password" name="password" type="password"
+                    placeholder="Digite sua senha"
+                    autocomplete="current-password"
+                    maxlength="4096" required>
+            </div>
+
             <button type="submit">Entrar</button>
         </form>
+
+        <footer class="login-footer">Acesso administrativo</footer>
     </main>
 </body>
 </html>

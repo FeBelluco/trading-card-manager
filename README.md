@@ -133,7 +133,16 @@ há limitação de tentativas de login; o ambiente é local de demonstração.
 - Destacar Cadastrar carta como ação principal e posicionar Sair no cabeçalho:
   facilita encontrar o cadastro e separa a ação de sessão das ações das cartas.
 - Permitir ampliar a imagem da carta sem sair da listagem: facilita conferir
-  detalhes, com fechamento pelo botão Fechar ou pela tecla Escape.
+  detalhes, com fechamento pelo botão ×, identificado como Fechar imagem para
+  leitores de tela, ou pela tecla Escape.
+- Usar tema escuro consistente no login, na listagem e nos formulários, com
+  ações principais em dourado e indicação de foco para navegação por teclado.
+- Organizar campos e imagens em duas colunas em telas maiores e em uma coluna
+  no celular: facilita revisar os dados junto à prévia sem comprimir os campos.
+- Identificar a imagem atual e a nova imagem selecionada na edição. O rótulo
+  da prévia aparece somente quando há um arquivo aceito pela validação local.
+- Destacar as confirmações de cadastro, edição e exclusão em uma faixa com
+  texto e fundo verde, sem exigir o fechamento de outro modal.
 
 ## Listagem de cartas
 
